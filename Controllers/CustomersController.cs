@@ -43,21 +43,49 @@ namespace Flixster.Controllers
         public ActionResult New()
         {
             var membershipTypes = _context.MembershipTypes;
-            var viewModel = new NewCustomerViewModel()
+            var viewModel = new CustomerFormViewModel()
             {
                 MembershipTypes = membershipTypes.ToList()
             };
 
-            return View(viewModel);
+            return View("CustomerForm", viewModel);
         }
 
         [HttpPost]
-        public ActionResult Create(Customer customer)
+        public ActionResult Save(Customer customer)
         {
-            _context.Customers.Add(customer);
+            if (customer.Id ==0)
+                _context.Customers.Add(customer);
+            else
+            {
+                var existingCustomer = _context.Customers.Single(c => c.Id == customer.Id);
+
+                existingCustomer.Name = customer.Name;
+                existingCustomer.Birthdate = customer.Birthdate;
+                existingCustomer.MembershipTypeId = customer.MembershipTypeId;
+                existingCustomer.isSubscribedToNewsletter = customer.isSubscribedToNewsletter;
+                
+            }
+
             _context.SaveChanges();
 
             return RedirectToAction("Index", "Customers");
+        }
+
+        public ActionResult Edit(int Id)
+        {
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == Id);
+            
+            if(customer ==null)
+                return HttpNotFound();
+
+            var viewModel = new CustomerFormViewModel()
+            {
+                Customer = customer,
+                MembershipTypes = _context.MembershipTypes.ToList()
+            };
+
+            return View("CustomerForm", viewModel);
         }
     }
 }
