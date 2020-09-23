@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity.Infrastructure.MappingViews;
+using Flixster.ViewModels;
 
 namespace Flixster.Controllers
 {
@@ -36,6 +38,17 @@ namespace Flixster.Controllers
                 return HttpNotFound();
 
             return View(customer);
+        }
+
+        public ActionResult New()
+        {
+            var membershipTypes = _context.MembershipTypes;
+            var viewModel = new NewCustomerViewModel()
+            {
+                MembershipTypes = membershipTypes.ToList()
+            };
+
+            return View(viewModel);
         }
     }
 }

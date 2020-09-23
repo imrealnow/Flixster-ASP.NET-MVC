@@ -12,6 +12,7 @@ namespace Flixster.Models
         [Required, StringLength(255)]
         public string Name { get; set; }
 
+        [Display(Name = "Date of Birth")]
         public DateTime? Birthdate { get; set; }
 
         public bool isSubscribedToNewsletter { get; set; }
