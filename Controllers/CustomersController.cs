@@ -1,5 +1,6 @@
 ﻿using Flixster.Models;
 using System;
+using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,7 +10,7 @@ namespace Flixster.Controllers
 {
     public class CustomersController : Controller
     {
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
         public CustomersController()
         {
@@ -24,7 +25,7 @@ namespace Flixster.Controllers
         // GET: Customer
         public ActionResult Index()
         {
-            return View(_context.Customers.ToList());
+            return View(_context.Customers.Include(c => c.MembershipType).ToList());
         }
 
         // GET: Customer/Details/5
