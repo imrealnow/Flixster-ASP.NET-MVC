@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure.MappingViews;
 using System.Linq;
 using System.Web;
@@ -11,23 +12,15 @@ namespace Flixster.Controllers
 {
     public class MoviesController : Controller
     {
-        // GET: Movie
-        public ActionResult Random()
+        private readonly ApplicationDbContext _context;
+        public MoviesController()
         {
-            var movie = new Movie() { Name = "Shrek!" };
-            var customers = new List<Customer>()
-            {
-                new Customer() { Name = "Customer 1" },
-                new Customer() { Name = "Customer 2"}
-            };
+            _context = new ApplicationDbContext();
+        }
 
-            var viewModel = new RandomMovieViewModel()
-            {
-                Movie = movie,
-                Customers = customers
-            };
-
-            return View(viewModel);
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
         }
 
         public ActionResult Index(int? pageIndex, string sortBy)
@@ -38,7 +31,16 @@ namespace Flixster.Controllers
             if (String.IsNullOrWhiteSpace(sortBy))
                 sortBy = "Name";
 
-            return View(GetMovies());
+            return View(_context.Movies.Include(m => m.Genre));
+        }
+
+        public ActionResult Details(int Id)
+        {
+            var movie = _context.Movies.Include(m => m.Genre).SingleOrDefault(m => m.Id == Id);
+            if (movie == null)
+                return HttpNotFound();
+
+            return View(movie);
         }
 
         [Route("movies/released/{year:regex(\\d{4})}/{month:regex(\\d{2}):range(1,12)}")]
