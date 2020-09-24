@@ -223,6 +223,18 @@
     <Compile Include="Migrations\202009231406356_PopulateGenres.Designer.cs">
       <DependentUpon>202009231406356_PopulateGenres.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009231624074_AddGenreIdToMovie.cs" />
+    <Compile Include="Migrations\202009231624074_AddGenreIdToMovie.Designer.cs">
+      <DependentUpon>202009231624074_AddGenreIdToMovie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009231633378_AddGenresDBSet.cs" />
+    <Compile Include="Migrations\202009231633378_AddGenresDBSet.Designer.cs">
+      <DependentUpon>202009231633378_AddGenresDBSet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009231707581_ModifiedDateTypes.cs" />
+    <Compile Include="Migrations\202009231707581_ModifiedDateTypes.Designer.cs">
+      <DependentUpon>202009231707581_ModifiedDateTypes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -234,6 +246,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\CustomerFormViewModel.cs" />
+    <Compile Include="ViewModels\MovieFormViewModel.cs" />
     <Compile Include="ViewModels\RandomMovieViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -299,6 +312,7 @@
     <Content Include="Views\Customers\Details.cshtml" />
     <Content Include="Views\Movies\Details.cshtml" />
     <Content Include="Views\Customers\CustomerForm.cshtml" />
+    <Content Include="Views\Movies\MovieForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -352,6 +366,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009231406356_PopulateGenres.resx">
       <DependentUpon>202009231406356_PopulateGenres.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009231624074_AddGenreIdToMovie.resx">
+      <DependentUpon>202009231624074_AddGenreIdToMovie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009231633378_AddGenresDBSet.resx">
+      <DependentUpon>202009231633378_AddGenresDBSet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009231707581_ModifiedDateTypes.resx">
+      <DependentUpon>202009231707581_ModifiedDateTypes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

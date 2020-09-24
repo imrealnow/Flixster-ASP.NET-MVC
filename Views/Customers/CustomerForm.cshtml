@@ -1,6 +1,6 @@
 ﻿@model Flixster.ViewModels.CustomerFormViewModel
 @{
-    ViewBag.Title = "CreateCustomer";
+    ViewBag.Title = "Edit Customer";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -14,7 +14,7 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(c => c.Customer.Birthdate)
-        @Html.TextBoxFor(c => c.Customer.Birthdate, new { type = "Date", @class = "form-control" })
+        @Html.TextBox("Customer.Birthdate", Model.Customer.Birthdate.Value.ToString("yyyy-MM-dd"), new { id = "Customer_Birthdate", type = "Date", @class = "form-control" })
     </div>
     <div class="form-group">
         @Html.LabelFor(c => c.Customer.MembershipTypeId)

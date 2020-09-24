@@ -54,17 +54,18 @@ namespace Flixster.Controllers
         [HttpPost]
         public ActionResult Save(Customer customer)
         {
-            if (customer.Id ==0)
+            if (customer.Id == 0)
                 _context.Customers.Add(customer);
             else
             {
                 var existingCustomer = _context.Customers.Single(c => c.Id == customer.Id);
 
                 existingCustomer.Name = customer.Name;
-                existingCustomer.Birthdate = customer.Birthdate;
                 existingCustomer.MembershipTypeId = customer.MembershipTypeId;
                 existingCustomer.isSubscribedToNewsletter = customer.isSubscribedToNewsletter;
-                
+                if (customer.Birthdate.HasValue)
+                    existingCustomer.Birthdate = (DateTime)customer.Birthdate;
+
             }
 
             _context.SaveChanges();
@@ -75,8 +76,8 @@ namespace Flixster.Controllers
         public ActionResult Edit(int Id)
         {
             var customer = _context.Customers.SingleOrDefault(c => c.Id == Id);
-            
-            if(customer ==null)
+
+            if (customer == null)
                 return HttpNotFound();
 
             var viewModel = new CustomerFormViewModel()

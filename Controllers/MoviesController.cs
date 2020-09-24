@@ -23,15 +23,9 @@ namespace Flixster.Controllers
             _context.Dispose();
         }
 
-        public ActionResult Index(int? pageIndex, string sortBy)
+        public ActionResult Index()
         {
-            if (!pageIndex.HasValue)
-                pageIndex = 1;
-
-            if (String.IsNullOrWhiteSpace(sortBy))
-                sortBy = "Name";
-
-            return View(_context.Movies.Include(m => m.Genre));
+            return View(_context.Movies.Include(m => m.Genre).ToList());
         }
 
         public ActionResult Details(int Id)
@@ -49,13 +43,55 @@ namespace Flixster.Controllers
             return Content(year + "/" + month);
         }
 
-        private IEnumerable<Movie> GetMovies()
+        public ActionResult New()
         {
-            return new List<Movie>()
+            var genres = _context.Genres;
+            var viewModel = new MovieFormViewModel()
             {
-                new Movie(){Id=0, Name="Unstoppable"},
-                new Movie(){Id=0, Name="Wreck-It Ralph"}
+                Genres = genres.ToList()
             };
+
+            return View("MovieForm", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Save(Movie movie)
+        {
+            if (movie.Id == 0)
+            {
+                //movie.DateAdded = (DateTime)DateTime.Now;
+                _context.Movies.Add(movie);
+                
+            }
+            else
+            {
+                var existingMovie = _context.Movies.Single(m => m.Id == movie.Id);
+
+                existingMovie.Name = movie.Name;
+                existingMovie.ReleaseDate = (DateTime)movie.ReleaseDate;
+                existingMovie.GenreId = movie.GenreId;
+
+            }
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Movies");
+        }
+
+        public ActionResult Edit(int Id)
+        {
+            var movie = _context.Movies.SingleOrDefault(m => m.Id == Id);
+
+            if (movie == null)
+                return HttpNotFound();
+
+            var viewModel = new MovieFormViewModel()
+            {
+                Movie = movie,
+                Genres = _context.Genres.ToList()
+            };
+
+            return View("MovieForm", viewModel);
         }
     }
 }
