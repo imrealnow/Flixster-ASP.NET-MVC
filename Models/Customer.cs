@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -17,6 +18,7 @@ namespace Flixster.Models
 
         [Display(Name = "Date of Birth")]
         [Min18YearsIfAMember]
+        [Column(TypeName = "datetime2")]
         public DateTime? Birthdate { get; set; }
 
 
@@ -25,7 +27,7 @@ namespace Flixster.Models
 
         public MembershipType MembershipType { get; set; }
 
-
+        [Required]
         [Display(Name = "Membership Type")]
         public byte MembershipTypeId { get; set; }
     }

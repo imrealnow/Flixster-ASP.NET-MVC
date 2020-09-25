@@ -45,6 +45,7 @@ namespace Flixster.Controllers
             var membershipTypes = _context.MembershipTypes;
             var viewModel = new CustomerFormViewModel()
             {
+                Customer = new Customer(),
                 MembershipTypes = membershipTypes.ToList()
             };
 
