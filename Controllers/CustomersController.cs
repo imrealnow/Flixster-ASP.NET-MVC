@@ -27,7 +27,7 @@ namespace Flixster.Controllers
         // GET: Customer
         public ActionResult Index()
         {
-            return View(_context.Customers.Include(c => c.MembershipType).ToList());
+            return View();
         }
 
         // GET: Customer/Details/5

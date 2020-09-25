@@ -9,11 +9,6 @@
 }
 
 <h2>Customers</h2>
-@if (!Model.Any())
-{
-    <p>We don't have any customers yet.</p>
-}
-else
 {
     <table id="customers" class="table table-bordered table-hover">
         <thead>
@@ -49,9 +44,10 @@ else
                     {
                         data: "id",
                         render: function (data) {
-                            return "<button class='btn-link js-delete' data-customer-id='" + data + ">Delete</button>";
+                            return "<button class='btn-link js-delete' data-customer-id='" + data + "'>Delete</button>";
                         }
                     }
+                ]
             });
 
             $("#customers").on("click", ".js-delete", function () {
