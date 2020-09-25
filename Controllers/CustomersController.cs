@@ -74,7 +74,7 @@ namespace Flixster.Controllers
 
                 existingCustomer.Name = customer.Name;
                 existingCustomer.MembershipTypeId = customer.MembershipTypeId;
-                existingCustomer.isSubscribedToNewsletter = customer.isSubscribedToNewsletter;
+                existingCustomer.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
                 if (customer.Birthdate.HasValue)
                     existingCustomer.Birthdate = (DateTime)customer.Birthdate;
 

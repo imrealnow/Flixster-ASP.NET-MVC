@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace Flixster.Models
+namespace Flixster.Dtos
 {
-    public class Customer
+    public class CustomerDto
     {
         public int Id { get; set; }
 
@@ -15,20 +14,11 @@ namespace Flixster.Models
         [Required, StringLength(255)]
         public string Name { get; set; }
 
-
-        [Display(Name = "Date of Birth")]
-        [Min18YearsIfAMember]
-        [Column(TypeName = "datetime2")]
         public DateTime? Birthdate { get; set; }
-
 
         public bool IsSubscribedToNewsletter { get; set; }
 
-
-        public MembershipType MembershipType { get; set; }
-
         [Required]
-        [Display(Name = "Membership Type")]
         public byte MembershipTypeId { get; set; }
     }
 }
