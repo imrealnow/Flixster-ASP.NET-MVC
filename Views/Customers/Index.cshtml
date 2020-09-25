@@ -7,26 +7,34 @@
     ViewBag.Title = "Customers";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="container">
+    <div class="row">
+        <div class="col-sm-10" style="padding-left: 0px">
+            <h2>Customers</h2>
+        </div>
+        <div class="col-sm-2">
+            <a href="/customers/new" class="btn btn-default">Add New Customer</a>
+        </div>
+    </div>
+</div>
 
-<h2>Customers</h2>
-{
-    <table id="customers" class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>Customer</th>
-                <th>Membership Type</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-}
+<table id="customers" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Customer</th>
+            <th>Membership Type</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
 @section scripts
 {
     <script>
         $(document).ready(() => {
-            $("#customers").DataTable({
+            var table = $("#customers").DataTable({
                 ajax: {
                     url: "/api/customers",
                     dataSrc: ""
@@ -39,7 +47,7 @@
                         }
                     },
                     {
-                        data: "name"
+                        data: "membershipType.name"
                     },
                     {
                         data: "id",
@@ -59,12 +67,12 @@
                             url: "/api/customers/" + button.attr("data-customer-id"),
                             method: "DELETE",
                             success: function () {
-                                button.parents("tr").remove();
+                                table.row(button.parents("tr")).remove().draw();
                             }
                         })
                     }
                 });
             });
         });
-    </script>    
+    </script>
 }
