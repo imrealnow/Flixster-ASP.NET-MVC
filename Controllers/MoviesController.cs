@@ -48,7 +48,6 @@ namespace Flixster.Controllers
             var genres = _context.Genres;
             var viewModel = new MovieFormViewModel()
             {
-                Movie = new Movie(),
                 Genres = genres.ToList()
             };
 

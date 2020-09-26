@@ -12,7 +12,7 @@
         <tr>
             <th>Movie</th>
             <th>Genre</th>
-            <th>Release Date</th>
+            <th>Release Year</th>
             <th>Delete</th>
         </tr>
     </thead>
@@ -40,7 +40,10 @@
                         data: "genre.name"
                     },
                     {
-                        data: "releaseDate"
+                        data: "releaseDate",
+                        render: function (data) {
+                            return data.split("-")[0];
+                        }
                     },
                     {
                         data: "id",

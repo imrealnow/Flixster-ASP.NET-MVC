@@ -1,9 +1,9 @@
 ﻿@model Flixster.ViewModels.MovieFormViewModel
 @{
-    ViewBag.Title = Model.Movie.Id == 0 ? "Add Movie" : "Edit Movie";
+    ViewBag.Title = Model.Movie == null ? "Add Movie" : "Edit Movie";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@if (Model.Movie.Id == 0)
+@if (Model.Movie == null)
 {
     <h2>New Movie</h2>
 }
@@ -22,7 +22,14 @@ else
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Movie.ReleaseDate)
-        @Html.TextBox("Movie.ReleaseDate", Model.Movie.ReleaseDate.ToString("yyyy-MM-dd"), new { id = "Movie_ReleaseDate", type = "Date", @class = "form-control" })
+        @if (Model.Movie != null)
+        {
+            @Html.TextBox("Movie.ReleaseDate", Model.Movie.ReleaseDate.ToString("yyyy-MM-dd"), new { id = "Movie_ReleaseDate", type = "Date", @class = "form-control" })
+        }
+        else
+        {
+            @Html.TextBoxFor(m => m.Movie.ReleaseDate, new { type = "Date", @class = "form-control" })
+        }
         @Html.ValidationMessageFor(m => m.Movie.ReleaseDate)
     </div>
     <div class="form-group">
@@ -35,8 +42,9 @@ else
         @Html.TextBoxFor(m => m.Movie.CopiesAvailable, new { type = "Number", @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Movie.CopiesAvailable)
     </div>
-    @Html.HiddenFor(m => m.Movie.Id)
+    @Html.Hidden("Movie.Id", Model.Movie != null ? Model.Movie.Id : 0)
     @Html.AntiForgeryToken()
+
     <div class="row">
         <div class="col-sm-1">
             <button type="submit" class="btn btn-primary">Save</button>
