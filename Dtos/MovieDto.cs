@@ -19,6 +19,8 @@ namespace Flixster.Dtos
         public string Name { get; set; }
 
 
+        public GenreDto Genre { get; set; }
+
         [Required]
         public int GenreId { get; set; }
 
