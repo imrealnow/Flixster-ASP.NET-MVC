@@ -25,7 +25,10 @@ namespace Flixster.Controllers
 
         public ActionResult Index()
         {
-            return View(_context.Movies.Include(m => m.Genre).ToList());
+            if (User.IsInRole(RoleName.CanManageMovies))
+                return View("List");
+
+            return View("ReadOnlyList");
         }
 
         public ActionResult Details(int Id)
@@ -37,12 +40,7 @@ namespace Flixster.Controllers
             return View(movie);
         }
 
-        [Route("movies/released/{year:regex(\\d{4})}/{month:regex(\\d{2}):range(1,12)}")]
-        public ActionResult ByReleaseDate(int year, int month)
-        {
-            return Content(year + "/" + month);
-        }
-
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult New()
         {
             var genres = _context.Genres;
@@ -56,6 +54,7 @@ namespace Flixster.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult Save(Movie movie)
         {
             if (!ModelState.IsValid)
@@ -67,13 +66,13 @@ namespace Flixster.Controllers
                 };
                 return View("MovieForm", viewModel);
             }
-            
+
 
             if (movie.Id == 0)
             {
                 //movie.DateAdded = (DateTime)DateTime.Now;
                 _context.Movies.Add(movie);
-                
+
             }
             else
             {
@@ -90,6 +89,7 @@ namespace Flixster.Controllers
             return RedirectToAction("Index", "Movies");
         }
 
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult Edit(int Id)
         {
             var movie = _context.Movies.SingleOrDefault(m => m.Id == Id);
