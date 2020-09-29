@@ -54,9 +54,9 @@ namespace Flixster
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "336342920955147",
+               appSecret: "ac0d9c50e2edec39f7bf370edd905c72");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
