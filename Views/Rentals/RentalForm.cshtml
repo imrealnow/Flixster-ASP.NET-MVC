@@ -8,13 +8,13 @@
     <div class="form-group">
         <label>Customer</label>
         <div class="tt-container">
-            <input id="customer" data-rule-validCustomer="true" required class="form-control" type="text" value="" />
+            <input id="customer" name="customer" data-rule-validCustomer="true" required class="form-control" type="text" value="" />
         </div>
     </div>
     <div class="form-group">
         <label>Movies</label>
         <div class="tt-container">
-            <input id="movie" data-rule-atLeastOneMovie="true" type="text" value="" class="form-control" />
+            <input id="movie" name="movie" data-rule-atLeastOneMovie="true" type="text" value="" class="form-control" />
         </div>
     </div>
     <div class="row">
@@ -96,11 +96,19 @@
                         method: 'post',
                         data: vm
                     })
-                    .done(function () {
-                        toastr.success("Rentals successfully recorded.");
-                    }).fail(function () {
-                        toastr.success("Something unexpected occurred.");
-                    });
+                        .done(function () {
+                            toastr.success("Rentals successfully recorded.");
+
+                            $('#customer').typeahead("val", "");
+                            $('#movie').typeahead("val", "");
+                            $('#movies').empty();
+
+                            vm = { movieIds: [] };
+                        }).fail(function () {
+                            toastr.success("Something unexpected occurred.");
+                        });
+
+                    return false;
                 }
             });
         });
