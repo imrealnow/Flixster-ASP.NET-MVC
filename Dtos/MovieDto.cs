@@ -31,7 +31,7 @@ namespace Flixster.Dtos
         public DateTime DateAdded { get; set; }
 
         [Required]
-        [Range(0, 20)]
-        public byte CopiesAvailable { get; set; }
+        [Range(1, 20)]
+        public byte NumberInStock { get; set; }
     }
 }

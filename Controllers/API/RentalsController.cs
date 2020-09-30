@@ -19,27 +19,35 @@ namespace Flixster.Controllers.API
         }
 
         [HttpPost]
-        public IHttpActionResult CreateRental(RentalDto rentalDto )
+        public IHttpActionResult CreateRental(RentalDto rentalDto)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
+            if (rentalDto.MovieIds.Count == 0)
+                return BadRequest("No MovieIds have been given.");
 
-            List<Rental> rentals = new List<Rental>();
+            var customer = _context.Customers.Single(c => c.Id == rentalDto.CustomerId);
 
-            foreach(int movieId in rentalDto.MovieIds)
+            var movies = _context.Movies.Where(m => rentalDto.MovieIds.Contains(m.Id)).ToList();
+
+            foreach (Movie movie in movies)
             {
+                if (movie.CopiesAvailable == 0)
+                    return BadRequest("No copies available");
+
+                movie.CopiesAvailable--;
+
                 var newRental = new Rental
                 {
-                    //CustomerId = rentalDto.CustomerId,
-                    //MovieId = movieId
+                    Customer = customer,
+                    Movie = movie,
+                    DateRented = DateTime.Now
                 };
+
                 _context.Rentals.Add(newRental);
-                rentals.Add(newRental);
             }
 
             _context.SaveChanges();
 
-            return Ok(rentals);
+            return Ok(rentalDto);
         }
     }
 }

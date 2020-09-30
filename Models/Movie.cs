@@ -35,8 +35,11 @@ namespace Flixster.Models
         public DateTime DateAdded { get; set; }
 
         [Required]
+        [Display(Name = "Number In Stock")]
+        [Range(1, 20)]
+        public byte NumberInStock { get; set; }
+
         [Display(Name = "Copies Available")]
-        [Range(0,20)]
         public byte CopiesAvailable { get; set; }
     }
 }
